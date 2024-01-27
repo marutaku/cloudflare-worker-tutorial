@@ -60,9 +60,21 @@ const render = (data: string) => `<!DOCTYPE html>
       var todoContainer = document.querySelector("#todos")
       window.todos.forEach(todo => {
         var el = document.createElement("div")
-        el.textContent = todo.name
+				var name = document.createElement("span")
+        name.textContent = todo.name
+        el.appendChild(name)
         todoContainer.appendChild(el)
       })
+			var populateTodos = function() {
+				var todoContainer = document.querySelector("#todos")
+				todoContainer.innerHTML = null
+				window.todos.forEach(todo => {
+					var el = document.createElement("div")
+					el.textContent = todo.name
+					todoContainer.appendChild(el)
+				})
+			}
+
 			var createTodo = function() {
 				var input = document.querySelector("input[name=name]")
 				if (input.value.length !== 0) {
@@ -75,7 +87,8 @@ const render = (data: string) => `<!DOCTYPE html>
 						method: "PUT",
 						body: JSON.stringify({ todos: todos }),
 					})
-					window.todos = todos
+					populateTodos()
+					input.value = ""
 				}
 
 			}
