@@ -110,7 +110,7 @@ const getTodos = async (env: Env) => {
 	} else {
 		data = JSON.parse(cache)
 	}
-	console.log(data)
+
 	const response = new Response(render(JSON.stringify(data.todos).replace(/</g, '\\u003c')), {
 		headers: { 'Content-Type': 'text/html' },
 	});
@@ -119,7 +119,7 @@ const getTodos = async (env: Env) => {
 
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		if (request.method === 'PU') {
+		if (request.method === 'PUT') {
 			return updateTodos(request, env);
 		} else {
 			return getTodos(env)
